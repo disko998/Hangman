@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import Header from './components/header/Header.js'
+import Word from './components/word/Word'
+import Wrong from './components/wrong/Wrong'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [word, setWord] = React.useState('hangman')
+    const [userInputs, setUserInputs] = React.useState([])
+
+    React.useEffect(() => {
+        document.onkeydown = handleInputs
+    }, [userInputs])
+
+    const handleInputs = e => {
+        const charRegex = /^[A-z]$/
+        if (charRegex.test(e.key)) {
+            //console.log([...userInputs, e.key])
+            if (!userInputs.includes(e.key)) {
+                setUserInputs([...userInputs, e.key])
+            }
+        }
+    }
+
+    return (
+        <div className='App'>
+            <Header />
+            <Wrong word={word} userInputs={userInputs} />
+            <Word word={word} userInputs={userInputs} />
+        </div>
+    )
 }
 
-export default App;
+export default App
