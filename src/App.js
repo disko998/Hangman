@@ -3,6 +3,8 @@ import './App.css'
 import Header from './components/header/Header.js'
 import Word from './components/word/Word'
 import Wrong from './components/wrong/Wrong'
+import Lifes from './components/lifes/Lifes'
+import { getWrongLetters, getRightLetters } from './util/helper'
 
 function App() {
     const [word, setWord] = React.useState('hangman')
@@ -10,8 +12,12 @@ function App() {
 
     React.useEffect(() => {
         document.onkeydown = handleInputs
+        console.log(getRightLetters(word, userInputs))
+        if (getRightLetters(word, userInputs).join('') === word) {
+            alert('You won')
+            setUserInputs([])
+        }
     }, [userInputs])
-
     const handleInputs = e => {
         const charRegex = /^[A-z]$/
         if (charRegex.test(e.key)) {
@@ -21,12 +27,17 @@ function App() {
             }
         }
     }
-
+    const onEnd = () => {
+        alert('End game.You Lose!!')
+        setUserInputs([])
+    }
+    const wrongInputs = getWrongLetters(word, userInputs)
     return (
         <div className='App'>
             <Header />
-            <Wrong word={word} userInputs={userInputs} />
+            <Wrong wrong={wrongInputs} />
             <Word word={word} userInputs={userInputs} />
+            <Lifes lifes={6 - wrongInputs.length} onEnd={onEnd} />
         </div>
     )
 }

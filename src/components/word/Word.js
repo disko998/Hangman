@@ -7,7 +7,7 @@ export default function Word({ word, userInputs }) {
     const arrWord = word.split('')
 
     return (
-        <div class='word'>
+        <div className='word'>
             {arrWord.map(letter =>
                 userInputs.includes(letter) ? <Letter letter={letter} /> : <Letter />,
             )}

@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import './wrong.css'
+import { getWrongLetters } from '../../util/helper'
 export default class Wrong extends Component {
     constructor(props) {
         super(props)
     }
     render() {
-        const arrWord = this.props.word.split('')
-
         return (
-            <div class='wrong'>
+            <div className='wrong'>
                 Wrong:
-                {this.props.userInputs.map(letter =>
-                    this.props.word.indexOf(letter) == -1 ? `${letter},` : null,
-                )}
+                {this.props.wrong.join(',')}
             </div>
         )
     }
